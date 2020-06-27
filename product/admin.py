@@ -7,11 +7,15 @@ class ProductImageInline(admin.TabularInline):
     extra = 5
 
 class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
     list_display = ['title', 'status']
+    list_editable = ['status']
     list_filter = ['status']
 
 class ProductAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
     list_display = ['title', 'status', 'category']
+    list_editable = ['status']
     list_filter = ['status', 'category']
     inlines = [ProductImageInline]
 
