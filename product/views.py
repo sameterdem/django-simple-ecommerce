@@ -1,5 +1,23 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from .models import Category, Product
 
-def index(request):
-   return  HttpResponse("Product Page")
+def index(request, slug):
+    context = dict()
+    return render(request, 'products.html', context)
+
+def category(request, cat_slug):
+    context = dict()
+
+    # Get all categories
+    context['categories'] = Category.objects.filter(
+       status = 'True',
+    ).order_by('title')
+
+    # Get categories by category sub
+    context['category'] = get_object_or_404(Category, slug=cat_slug)
+    context['items'] = Product.objects.filter(
+        category = context['category'],
+        status = 'True',
+    )
+    
+    return render(request, 'category.html', context)

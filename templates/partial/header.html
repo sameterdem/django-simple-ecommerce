@@ -1,3 +1,5 @@
 <header>
-    Header
+    {% for item in categories %}
+        <a href="{% url 'category' cat_slug=item.slug%}">{{item.title}}</a>
+    {% endfor %}
 </header>
