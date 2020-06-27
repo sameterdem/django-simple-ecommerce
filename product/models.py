@@ -1,13 +1,13 @@
 from django.db import models
 
-# Category model
+# Product category model
 class Category(models.Model):
     STATUS = (
         ('True', 'Evet'),
         ('False', 'Hayır')
     )
 
-    title       = models.CharField(max_length = 30)
+    title       = models.CharField(max_length = 100)
     keywords    = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
     status      = models.CharField(max_length = 10, choices = STATUS)
@@ -27,7 +27,7 @@ class Product(models.Model):
     )
     
     category    = models.ForeignKey(Category, on_delete = models.CASCADE)
-    title       = models.CharField(max_length = 30)
+    title       = models.CharField(max_length = 150)
     keywords    = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
     status      = models.CharField(max_length = 10, choices = STATUS)
@@ -40,6 +40,20 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+# Product image model
+class Images(models.Model):
+    products    = models.ForeignKey(Product, on_delete = models.CASCADE)
+    title       = models.CharField(max_length = 50, blank = True)
+    image       = models.ImageField(blank = True, upload_to = 'images')
+
+    def __str__(self):
+        return self.title
+    
+
+
+
+
     
     
     
