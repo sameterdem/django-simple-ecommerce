@@ -1,8 +1,9 @@
 from django.conf.urls import url
 from django.contrib import admin
-from pages import views
+from django.urls import path, include
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    path('', include('pages.urls')),
+    path('product/', include('product.urls')),
+    url(r'^admin/', admin.site.urls)
 ]

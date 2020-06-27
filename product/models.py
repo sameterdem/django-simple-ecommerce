@@ -17,7 +17,12 @@ class Category(models.Model):
     update_at   = models.DateTimeField(auto_now = True)
 
     def __str__(self):
-        return self.title
+        k         = self.parent
+        full_path = [self.title]
+        while k is not None:
+            full_path.append(k.title)
+            k = k.parent
+        return ' » '.join(full_path[::-1])
 
 # Product model
 class Product(models.Model):
