@@ -1,0 +1,9 @@
+
+{% extends 'layouts/main.html' %}
+{% block content %}
+    {% for item in cart %}
+        {{item.product}}
+        {{item.quantity}}
+        <a href="/order/deletefromcart/{{ item.id }}">Sil</a>
+    {% endfor %}
+{% endblock %}

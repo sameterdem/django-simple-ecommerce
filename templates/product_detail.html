@@ -3,10 +3,21 @@
 {% block content %}
     {% for item in product %}
         {{item.title}} - {{item.price}}
-        SEPETE EKLE
+       
+
+         <form action="/order/addtocart/{{item.id}}" method="post">
+            {% csrf_token %}
+            <input name="quantity" type="number" min="0" max="{{item.amound}}" value="1"/>
+            <button type="submit">SEPETE EKLE</button>
+
+        </form>
+
+
     {% endfor %}
 
     {%for image in images %}
         {{image.image}}
     {% endfor %}
+
+   
 {% endblock %}
