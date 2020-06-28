@@ -8,11 +8,6 @@ def index(request, slug):
 def category(request, cat_slug):
     context = dict()
 
-    # Get all categories
-    context['categories'] = Category.objects.filter(
-       status = 'True',
-    ).order_by('title')
-
     # Get categories by category sub
     context['category'] = get_object_or_404(Category, slug=cat_slug)
     context['items'] = Product.objects.filter(
