@@ -1,4 +1,10 @@
 <header>
+    {% if user.is_authenticated %}
+       {{ user.get_username }} - <a href="logout">Cikis Yap</a>
+    {% else %}
+        <a href="/login">Giris yapin</a> -  <a href="/signup">Kayit ol</a>
+    {% endif %}
+
     {% for item in categories %}
         <a href="{% url 'category' cat_slug=item.slug%}">{{item.title}}</a>
     {% endfor %}

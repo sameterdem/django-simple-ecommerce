@@ -1,0 +1,15 @@
+
+{% extends 'layouts/main.html' %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages  %}
+           <div class="{{ message.tags }}"> {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input name="username"/>
+        <input name="password"/>
+        <button type="submit">Giris Yap</button>
+    </form>
+{% endblock %}
