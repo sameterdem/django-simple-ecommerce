@@ -2,7 +2,7 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
     {% for item in items %}
-        {{item.title}} - {{item.price}}
+        <a href="/product/detail/{{item.id}}/{{item.slug}}">{{item.title}} - {{item.price}}</a>
         SEPETE EKLE
     {% endfor %}
 {% endblock %}

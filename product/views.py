@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
+from .models import Category, Product, Images
 
 def index(request, slug):
     context = dict()
@@ -16,3 +16,16 @@ def category(request, cat_slug):
     )
     
     return render(request, 'category.html', context)
+
+def detail(request, id, slug):
+    context = dict()
+    #Get product 
+    context['product'] = Product.objects.filter(
+        id = id
+    )
+
+    #Get product all images
+    context['images'] = Images.objects.filter(
+        products_id = id
+    )
+    return render(request, 'product_detail.html', context)
