@@ -43,7 +43,7 @@ def addtocart(request, id):
                 data.product_id =id
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
-        messages.success(request, "Sepete Eklendi ")
+        messages.success(request, "Ürün sepete eklendi")
         return HttpResponseRedirect(url)
 
     else: 
@@ -57,13 +57,14 @@ def addtocart(request, id):
             data.product_id = id
             data.quantity = 1
             data.save()  
-        messages.success(request, "Sepete Eklendi")
+        messages.success(request, "Ürün sepete eklendi")
         return HttpResponseRedirect(url)
 
 @login_required(login_url='/login')
 def deletefromcart(request, id):
+    url = request.META.get('HTTP_REFERER') 
     Cart.objects.filter(id=id).delete()
-    messages.success(request, "Urun silindi.")
+    messages.success(request, "Ürün silindi")
     return HttpResponseRedirect("/order")
 
 @login_required(login_url='/login')
@@ -110,7 +111,7 @@ def checkout(request):
 
             Cart.objects.filter(user_id=current_user.id).delete() 
             request.session['cart_items']=0
-            messages.success(request, "Your Order has been completed. Thank you ")
+            messages.success(request, "Siparişiniz oluşturuldu. Teşekkürler")
             return render(request, 'checkoutInfo.html',{'ordercode':ordercode,'category': category})
         else:
             messages.warning(request, form.errors)

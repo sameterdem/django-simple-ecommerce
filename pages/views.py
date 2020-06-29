@@ -1,61 +1,48 @@
+import json
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 
-from product.models import Category
-from pages.forms import SignUpForm
+from product.models import Category, Product
+from pages.forms import SearchForm
 
 def index(request):
     context = dict()
+    context['items'] = Product.objects.filter(
+        status = 'True',
+    )
     return render(request, 'index.html', context)
 
-def signup(request):
-    context = dict()
-     # User already logged in
-    if request.user.is_authenticated:
-        return HttpResponseRedirect('/')
-
-    # Sign Up
-    form = SignUpForm(request.POST or None)
-
-    if request.method == 'POST':
+def search(request):
+    if request.method == 'POST': 
+        form = SearchForm(request.POST)
         if form.is_valid():
-            form.save()
-            # User auto login
-            username = request.POST['username']
-            password = request.POST['password1']
-            user = authenticate(request, username=username, password=password)
-            auth_login(request, user)
-            return HttpResponseRedirect('/')
-    
-    context['form'] = form
-    return render(request, 'signup.html', context)
+            query = form.cleaned_data['query'] 
+            catid = form.cleaned_data['catid']
+            if catid==0:
+                products=Product.objects.filter(title__icontains=query)
+            else:
+                products = Product.objects.filter(title__icontains=query,category_id=catid)
 
+            category = Category.objects.all()
+            context = {'products': products, 'query':query,
+                       'category': category }
+            return render(request, 'search.html', context)
 
-def login(request):
-    context = dict()
-
-    # User already logged in
-    if request.user.is_authenticated:
-        return HttpResponseRedirect('/')
-
-    # Login
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            auth_login(request, user)
-            return HttpResponseRedirect('/')
-        else:
-            messages.error(request, 'Kullanici adi ya da sifre yanlis.')
-            return HttpResponseRedirect('/login')
-
-
-    return render(request, 'login.html', context)
-
-def logout(request):
-    auth_logout(request)
     return HttpResponseRedirect('/')
+
+def search_autocomplete(request):
+  if request.is_ajax():
+    q = request.GET.get('term', '')
+    products = Product.objects.filter(title__icontains=q)
+    results = []
+    for item in products:
+      product_json = {}
+      product_json = item.title
+      results.append(product_json)
+    data = json.dumps(results)
+  else:
+    data = 'fail'
+  mimetype = 'application/json'
+  return HttpResponse(data, mimetype)

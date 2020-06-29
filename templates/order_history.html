@@ -1,0 +1,49 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+<div id="breadcrumb" class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <h3 class="breadcrumb-header">Siparişlerim</h3>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="container">
+   <div class="row">
+      {% include 'partial/account_nav.html' %}
+   </div>
+</div>
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="order-summary clearfix">
+               <table class="shopping-cart-table table">
+                  <tr>
+                     <th class="text-left">Id </th>
+                     <th class="text-left">Ad </th>
+                     <th class="text-left">Soyad </th>
+                     <th class="text-left">Toplam </th>
+                     <th class="text-left">Durum </th>
+                     <th class="text-left">Tarih </th>
+                     <th class="text-left">Detay </th>
+                  </tr>
+                  {% for o in orders %}
+                  <tr>
+                     <td class="text-left">{{ o.id}} </td>
+                     <td class="text-left">{{ o.first_name}} </td>
+                     <td class="text-left">{{ o.last_name}} </td>
+                     <td class="text-left">{{ o.total}} </td>
+                     <td class="text-left">{{ o.status}} </td>
+                     <td class="text-left">{{ o.create_at}} </td>
+                     <td class="text-left"><a class="primary-btn" href="/account/orders/detail/{{ o.id }}"> Detay </a></td>
+                  </tr>
+                  {% endfor %}
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

@@ -1,5 +1,24 @@
-
 {% extends 'layouts/main.html' %}
 {% block content %}
-   Siparis tamamlandi
+<div id="breadcrumb" class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <h3 class="breadcrumb-header">Sipariş oluşturuldu.</h3>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="newsletter">
+               <p>Sevgili <strong>{{ first_name }} {{  last_name }}</strong> siparişin oluşturuldu</p>
+               <p>Sipariş numaran: <strong>{{ ordercode }}</strong></p>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 {% endblock %}

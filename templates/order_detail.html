@@ -1,0 +1,91 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+<div id="breadcrumb" class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <h3 class="breadcrumb-header">Sipariş Detay</h3>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="container">
+   <div class="row">
+      {% include 'partial/account_nav.html' %}
+   </div>
+</div>
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="order-summary clearfix">
+               <table class="shopping-cart-table table">
+                  <tr>
+                     <th class="text-left">Ad Soyad</th>
+                     <td class="text-left">{{ order.first_name}} {{ order.last_name }} </td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Telefon</th>
+                     <td class="text-left">{{ order.phone}}</td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Adres</th>
+                     <td class="text-left">{{ order.address}}</td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Şehir</th>
+                     <td class="text-left">{{ order.city}}</td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Ülke</th>
+                     <td class="text-left">{{ order.country}}</td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Durum</th>
+                     <td class="text-left">{{ order.status}}</td>
+                  </tr>
+                  <tr>
+                     <th class="text-left">Tarih</th>
+                     <td class="text-left">{{ order.create_at}}</td>
+                  </tr>
+                  </tr>
+               </table>
+               <div class="section-title">
+                  <h4 class="title">Order Item List</h4>
+               </div>
+               <table class="shopping-cart-table table">
+                  <tr>
+                     <th class="text-left">Id </th>
+                     <th class="text-left">Product Name </th>
+                     <th class="text-left">Price </th>
+                     <th class="text-left">Qauatity </th>
+                     <th class="text-left">Amount </th>
+                     <th class="text-left">Status </th>
+                     <th class="text-left">Date </th>
+                  </tr>
+                  {% for rs in orderitems %}
+                  <tr>
+                     <td class="text-left">
+                        <a href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">
+                        {% if rs.variant.image_id > 0 %}
+                        <img src="{{rs.variant.image }}" alt="" style="height: 50px">
+                        {% else %}
+                        <img src="{{rs.product.image.url}}" alt="" style="height: 50px">
+                        {% endif %}
+                        </a>
+                     </td>
+                     <td class="text-left">{{ rs.product.title}} {{ rs.variant.size }}   {{ rs.variant.color }}</td>
+                     <td class="text-left">{{ rs.price}} </td>
+                     <td class="text-left">{{ rs.quantity}} </td>
+                     <td class="text-left">{{ rs.amount}} </td>
+                     <td class="text-left">{{ rs.status}} </td>
+                     <td class="text-left">{{ rs.create_at}} </td>
+                  </tr>
+                  {% endfor %}
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

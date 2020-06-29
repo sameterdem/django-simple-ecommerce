@@ -12,17 +12,11 @@ class Category(models.Model):
     description = models.CharField(max_length = 255)
     status      = models.CharField(max_length = 10, choices = STATUS)
     slug        = models.SlugField(max_length = 200, default = "")
-    parent      = models.ForeignKey('self', blank = True, null = True, related_name = 'children', on_delete = models.CASCADE)
     create_at   = models.DateTimeField(auto_now_add = True)
     update_at   = models.DateTimeField(auto_now = True)
 
     def __str__(self):
-        k         = self.parent
-        full_path = [self.title]
-        while k is not None:
-            full_path.append(k.title)
-            k = k.parent
-        return ' » '.join(full_path[::-1])
+        return self.title
 
 # Product model
 class Product(models.Model):
@@ -51,7 +45,7 @@ class Product(models.Model):
 class Images(models.Model):
     products    = models.ForeignKey(Product, on_delete = models.CASCADE)
     title       = models.CharField(max_length = 50, blank = True)
-    image       = models.ImageField(blank = True, upload_to = 'images')
+    image       = models.ImageField(blank = True, upload_to = 'images/')
 
     def __str__(self):
         return self.title

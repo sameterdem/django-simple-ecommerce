@@ -1,23 +1,57 @@
-
 {% extends 'layouts/main.html' %}
 {% block content %}
-    {% for item in product %}
-        {{item.title}} - {{item.price}}
-       
-
-         <form action="/order/addtocart/{{item.id}}" method="post">
-            {% csrf_token %}
-            <input name="quantity" type="number" min="0" max="{{item.amound}}" value="1"/>
-            <button type="submit">SEPETE EKLE</button>
-
-        </form>
-
-
-    {% endfor %}
-
-    {%for image in images %}
-        {{image.image}}
-    {% endfor %}
-
-   
+{% for item in product %}
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-5 col-md-push-2">
+            <div id="product-main-img">
+               <div class="product-preview">
+                  <img src="{{item.image.url}}" alt="">
+               </div>
+               {%for i in images %}
+               <div class="product-preview">
+                  <img src="{{ i.image.url }}" alt="">
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="col-md-2  col-md-pull-5">
+            <div id="product-imgs">
+               <div class="product-preview">
+                  <img src="{{item.image.url}}" alt="">
+               </div>
+               {%for i in images %}
+               <div class="product-preview">
+                  <img src="{{i.image.url}}" alt="">
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="col-md-5">
+            <div class="product-details">
+               <h2 class="product-name">{{item.title}}</h2>
+               <div>
+                  <h3 class="product-price">{{item.price}} ₺</h3>
+                  <span class="product-available">STOK: {{item.amount}}</span>
+               </div>
+               <p>{{item.detail|safe}}</p>
+               <form action="/order/addtocart/{{item.id}}" method="post">
+                  {% csrf_token %}
+                  <div class="add-to-cart">
+                     <div class="qty-label">
+                        Adet: 
+                        <div class="input-number">
+                           <input name="quantity" type="number" min="0" max="{{item.amound}}" value="1"/>
+                        </div>
+                     </div>
+                     <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Sepete Ekle</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
 {% endblock %}

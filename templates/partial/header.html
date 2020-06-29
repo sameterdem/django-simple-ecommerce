@@ -1,11 +1,109 @@
+{% load static %}
 <header>
-    {% if user.is_authenticated %}
-       {{ user.get_username }} - <a href="logout">Cikis Yap</a>
-    {% else %}
-        <a href="/login">Giris yapin</a> -  <a href="/signup">Kayit ol</a>
-    {% endif %}
-
-    {% for item in categories %}
-        <a href="{% url 'category' cat_slug=item.slug%}">{{item.title}}</a>
-    {% endfor %}
+   <div id="top-header">
+      <div class="container">
+         {% if user.is_authenticated %}
+         <ul class="header-links pull-left">
+            <li><a href="#">Hoşgeldin, {{ user.get_username }} </a></li>
+         </ul>
+         {% endif %}
+         <ul class="header-links pull-left">
+         </ul>
+         {% if user.is_authenticated %}
+         <ul class="header-links pull-right" style="margin-left:13px;">
+            <li><a href="/logout"><i class="fa fa-sign-out"></i>Çıkış Yap</a></li>
+         </ul>
+         <ul class="header-links pull-right">
+            <li><a href="/account"><i class="fa fa-user-o"></i>Hesabım</a></li>
+         </ul>
+         {% else %}
+         <ul class="header-links pull-right" style="margin-left:13px;">
+            <li><a href="/login"><i class="fa fa-sign-in"></i>Giriş Yap</a></li>
+         </ul>
+         <ul class="header-links pull-right">
+            <li><a href="/signup"><i class="fa fa-user-plus"></i>Kayıt Ol</a></li>
+         </ul>
+         {% endif %}
+      </div>
+   </div>
+   <div id="header">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3">
+               <div class="header-logo">
+                  <a href="/" class="logo">
+                  <img src="{% static "assets/images/logo.png" %}" alt="">
+                  </a>
+               </div>
+            </div>
+            <div class="col-md-6">
+               <div class="header-search">
+                  <form action="/search/" method="post">
+                  {% csrf_token %}
+                     <select name="catid" class="input-select">
+                        <option value="0">Tümü</option>
+                         {% for item in categories %}
+                        <option value="1">{{item.title}}</option>
+                        {% endfor %}
+                     </select>
+                     <input id="query" name="query" class="input" placeholder="Aranacak kelime">
+                     <button class="search-btn">Arama</button>
+                  </form>
+               </div>
+            </div>
+            <div class="col-md-3 clearfix">
+               <div class="header-ctn">
+                  <div class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sepetim</span>
+                        <div class="qty">
+                           {%if basket_count%} 
+                           {{basket_count}}
+                           {%else%} 
+                           0
+                           {% endif %}
+                        </div>
+                     </a>
+                     <div class="cart-dropdown">
+                        <div class="cart-list">
+                           {%if basket_count%} 
+                           {%for item in basket_products%}
+                           <div class="product-widget">
+                              <div class="product-img">
+                                 <img src="{{item.product.image.url}}" alt="">
+                              </div>
+                              <div class="product-body">
+                                 <h3 class="product-name"><a href="/product/detail/{{item.product.id}}/{{item.product.slug}}">{{item.product.title}}</a></h3>
+                                 <h4 class="product-price"><span class="qty">{{item.quantity}}x</span>{{item.product.price}} ₺</h4>
+                              </div>
+                           </div>
+                           {%endfor%}
+                           {%else%} 
+                           Sepetinizde ürün yok.
+                           {% endif %}
+                        </div>
+                        {%if basket_count%} 
+                        <div class="cart-summary">
+                           <small>{{basket_count}} ürün seçildi</small>
+                           <h5>TOPLAM:  {{basket_total}}</h5>
+                        </div>
+                        <div class="cart-btns">
+                           <a href="/order">Sepetim</a>
+                           <a href="/order/checkout">Ödeme  <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+                  <div class="menu-toggle">
+                     <a href="#">
+                     <i class="fa fa-bars"></i>
+                     <span>Menü</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </header>

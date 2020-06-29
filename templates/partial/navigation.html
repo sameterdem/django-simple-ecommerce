@@ -1,0 +1,12 @@
+<nav id="navigation">
+   <div class="container">
+      <div id="responsive-nav">
+         <ul class="main-nav nav navbar-nav">
+           <li><a href="/">Ana Sayfa</a></li>
+            {% for item in categories %}
+            <li><a href="{% url 'category' cat_slug=item.slug%}">{{item.title}}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+</nav>

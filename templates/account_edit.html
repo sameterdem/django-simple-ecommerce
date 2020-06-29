@@ -1,0 +1,35 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+<div id="breadcrumb" class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <h3 class="breadcrumb-header">Bilgilerimi Güncelle</h3>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="container">
+   <div class="row">
+      {% include 'partial/account_nav.html' %}
+   </div>
+</div>
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <form method="POST">
+               {% csrf_token %}
+               <fieldset class="form-group">
+                  {{ user_form.as_p  }}
+                  {{ profile_form.as_p  }}
+               </fieldset>
+               <div class="form-group">
+                  <button class="primary-btn" type="submit">Güncelle</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

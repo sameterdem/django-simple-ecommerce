@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     #APPS:
     'order',
     'pages',
-    'product'
+    'product',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'app.context.nav.nav_data'
+                'app.context.nav.nav_data',
+                'app.context.basket.basket_data'
             ],
         },
     },
@@ -86,9 +88,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'tr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
@@ -104,5 +106,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "../static")
 ]
 
-STATIC_MEDIA = '/media/'
+STATIC_URL = '/static/'
+
+MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../uploads')

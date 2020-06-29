@@ -1,15 +1,32 @@
-
 {% extends 'layouts/main.html' %}
 {% block content %}
-    {% if messages %}
-        {% for message in messages  %}
-           <div class="{{ message.tags }}"> {{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <input name="username"/>
-        <input name="password"/>
-        <button type="submit">Giris Yap</button>
-    </form>
+<div id="breadcrumb" class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <h3 class="breadcrumb-header">Üye Girişi</h3>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div>
+               <form action="" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <input class="input" type="text" name="username" placeholder="Kullanıcı Adı">
+                  </div>
+                  <div class="form-group">
+                     <input class="input" type="password" name="password" placeholder="Şifre">
+                  </div>
+                  <button type="submit" class="primary-btn order-submit">Giriş</button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 {% endblock %}
